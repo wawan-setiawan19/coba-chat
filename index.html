@@ -5,69 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
   </head>
   <body>
-    <form onsubmit="return sendMessage()">
-      <input
-        type="text"
-        id="message"
-        placeholder="Enter Message"
-        autocomplete="off"
-      />
-      <input type="submit" />
-    </form>
+    <div class="chat-container">
+      <div class="message-container">
+        <ul id="messages"></ul>
+      </div>
+      <div class="form">
+      <input type="text" placeholder="Masukkan pesan" id="message" autocomplete="off">
+      <button type="submit" onclick="sendMessage()">
+        <span class="material-icons">send</span>
+      </button>
+      </div>
 
-    <!-- create list -->
-    <ul id="messages"></ul>
-
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    </div>
     <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
-
-    <!-- Include firebase database -->
     <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-database.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-
-    <script>
-      // Your web app's Firebase configuration
-      var firebaseConfig = {
-        apiKey: "AIzaSyDl1EL64HdTrc2jC_lVrk3pSbSAG6b-bVE",
-        authDomain: "my-test-project-89885.firebaseapp.com",
-        projectId: "my-test-project-89885",
-        storageBucket: "my-test-project-89885.appspot.com",
-        messagingSenderId: "292312429900",
-        appId: "1:292312429900:web:e8110f147a79b40b0a0be9",
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-
-      let myName = prompt("Enter Your name");
-
-      function sendMessage() {
-        // get message
-        let message = document.getElementById("message").value;
-
-        // save in database
-        firebase.database().ref("messages").push().set({
-          sender: myName,
-          message: message,
-        });
-        // prevent from submitting
-        return false;
-      }
-
-      // listen for incoming messages
-      firebase
-        .database()
-        .ref("messages")
-        .on("child_added", function (snapshot) {
-          let html = "";
-          html += `
-            <li>${snapshot.val().sender}: ${snapshot.val().message}</li>
-          `;
-          document.getElementById("messages").innerHTML += html;
-        });
-    </script>
+    <script src="./chat.js"></script>
   </body>
 </html>
